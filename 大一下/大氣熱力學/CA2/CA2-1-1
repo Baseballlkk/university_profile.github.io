@@ -21,12 +21,14 @@ Tv = (1-(1/epsilon-1)*qv)*(T+273.15)
 
 T = T+273.15
 
-plt.title('Temperature, Virtual Temperature & Specific Humidity as Altitude Increasing', fontsize = 15)
-plt.ylabel('Altitude [m]', fontsize = 15)
 
+# plot the graph
+	
+plt.plot(T, H, linewidth = 0.5, color = 'red')
+plt.plot(Tv, H, linewidth = 0.5, color = 'b')
+plt.title('Temperature & Virtual Temperature as Altitude Increasing', fontsize = 15)
+plt.ylabel('Altitude [m]', fontsize = 15)
 plt.xlabel('Temperature')
-plt.plot(T, H, linewidth = 0.5, color = 'red', label = 'T')
-plt.plot(Tv, H, linewidth = 0.5, color = 'b', label = 'Tv')
 plt.xlim([np.min(T), np.max(T)])
 plt.ylim([0, np.max(H)+100])
 plt.xticks(np.linspace(np.min(T), np.max(T), 11))
