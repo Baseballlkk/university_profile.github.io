@@ -23,7 +23,7 @@ T = T+273.15
 
 
 # plot the graph
-	
+
 plt.plot(T, H, linewidth = 0.5, color = 'red')
 plt.plot(Tv, H, linewidth = 0.5, color = 'b')
 plt.title('Temperature & Virtual Temperature as Altitude Increasing', fontsize = 15)
