@@ -1,0 +1,15 @@
+{
+    "cSpell.ignoreWords": [
+        "matplotlib"
+    ],
+    "cSpell.words": [
+        "linspace",
+        "pyplot",
+        "xlabel",
+        "xlim",
+        "xticks",
+        "ylabel",
+        "ylim",
+        "yticks"
+    ]
+}

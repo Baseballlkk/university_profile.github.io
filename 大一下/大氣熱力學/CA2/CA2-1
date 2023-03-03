@@ -1,0 +1,61 @@
+# import library
+import math as m
+import numpy as np
+from matplotlib import pyplot as plt
+
+# set constant
+A = 2.53*pow(10,9)
+B = 5.42*pow(10,3)
+epsilon = 0.622
+
+# read data 
+H, P, T, U = np.loadtxt(r"C:\Users\joe51\OneDrive\桌面\台大課程相關文件\大一下\大氣熱力學\CA2\46810-2018072100.edt.txt", dtype = 'float', delimiter = ',', usecols=(1,2,3,4), skiprows = 3, unpack = True)
+
+# calculate for specific humidity
+es = A*np.exp(-B/(T+273.15))
+e = es*U/100
+qv = (epsilon*e)/(P-(1-epsilon)*e)
+
+# Calculate for virtual temperature
+Tv = (1-(1/epsilon-1)*qv)*(T+273.15)
+
+T = T+273.15
+
+# plot the graph (Tv-H)
+plt.plot(Tv, H, linewidth = 0.5)
+plt.xlim([np.min(Tv), np.max(Tv)])
+plt.ylim([0, np.max(H)+100])
+plt.xticks(np.linspace(np.min(Tv), np.max(Tv), 11))
+plt.yticks(np.linspace(0, np.max(H)+100, 21))
+plt.xlabel('Virtual Temperature [K]', fontsize = 15)
+plt.ylabel('Altitude [m]', fontsize = 15)
+plt.title('Virtual Temperature Profile as Altitude Increasing', fontsize = 15)
+
+plt.savefig('Tv-H.png', dpi = 600)
+plt.show()
+
+# plot the graph (SH-H)
+plt.plot(qv, H, linewidth = 0.5)
+plt.xlim([np.min(qv), np.max(qv)])
+plt.ylim([0, np.max(H)+100])
+plt.xticks(np.linspace(np.min(qv), np.max(qv), 11))
+plt.yticks(np.linspace(0, np.max(H)+100, 21))
+plt.xlabel('Specific Humidity', fontsize = 15)
+plt.ylabel('Altitude [m]', fontsize = 15)
+plt.title('Specific Humidity Profile as Altitude Increasing', fontsize = 15)
+
+plt.savefig('qv-H.png', dpi = 600)
+plt.show()
+
+# plot the graph (T-H)
+plt.plot(T, H, linewidth = 0.5)
+plt.xlim([np.min(T), np.max(T)])
+plt.ylim([0, np.max(H)+100])
+plt.xticks(np.linspace(np.min(T), np.max(T), 11))
+plt.yticks(np.linspace(0, np.max(H)+100, 21))
+plt.xlabel('Temperature [K]', fontsize = 15)
+plt.ylabel('Altitude [m]', fontsize = 15)
+plt.title('Temperature Profile as Altitude Increasing', fontsize = 15)
+
+plt.savefig('T-H.png', dpi = 600)
+plt.show()
