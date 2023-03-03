@@ -9,7 +9,7 @@ B = 5.42*pow(10,3)
 epsilon = 0.622
 
 # read data 
-H, P, T, U = np.loadtxt(r"C:\Users\joe51\OneDrive\桌面\台大課程相關文件\大一下\大氣熱力學\CA2\46810-2018072100.edt.txt", dtype = 'float', delimiter = ',', usecols=(1,2,3,4), skiprows = 3, unpack = True)
+H, P, T, U = np.loadtxt(r"C:\Users\joe51\OneDrive\桌面\profile_ntu\大一下\大氣熱力學\CA2\46810-2018072100.edt.txt", dtype = 'float', delimiter = ',', usecols=(1,2,3,4), skiprows = 3, unpack = True)
 
 TK = T+273.15
 
@@ -23,7 +23,7 @@ e = es*U/100
 qv = (epsilon*e)/(P-(1-epsilon)*e)
 
 # Calculate for virtual temperature
-Tv = (1-(1/epsilon-1)*qv)*(T+273.15)
+Tv = (1+(1/epsilon-1)*qv)*(T+273.15)
 
 # density of the initial dry air
 rho = P[0]/(287*Tv[0])

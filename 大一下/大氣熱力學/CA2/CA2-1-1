@@ -17,7 +17,7 @@ e = es*U/100
 qv = (epsilon*e)/(P-(1-epsilon)*e)
 
 # Calculate for virtual temperature
-Tv = (1-(1/epsilon-1)*qv)*(T+273.15)
+Tv = (1+(1/epsilon-1)*qv)*(T+273.15)
 
 T = T+273.15
 
