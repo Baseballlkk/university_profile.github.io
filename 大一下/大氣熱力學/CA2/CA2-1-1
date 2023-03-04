@@ -21,6 +21,24 @@ Tv = (1+(1/epsilon-1)*qv)*(T+273.15)
 
 T = T+273.15
 
+# plot e and q_v
+fig, ax = plt.subplots(1, 2, sharey = 'row')
+
+ax[0].plot(1000*qv, H, linewidth = 0.5)
+ax[0].set_title('Specific Humidity as Altitude Increasing', size = 15)
+ax[0].set_xlabel('Specific Humidity [g/kg]', size = 15)
+ax[0].set_xlim([0,np.max(1000*qv)])
+ax[0].set_xticks(np.linspace(np.min(1000*qv), np.max(1000*qv), 11))
+
+ax[1].plot(e, H, linewidth = 0.5)
+ax[1].set_title('Vapor Pressure as Altitude Increasing', size = 15)
+ax[1].set_xlabel('Vapor Pressure [hPa]', size = 15)
+ax[1].set_ylabel('Altitude [m]', size = 15)
+ax[1].set_xlim([0,np.max(e)])
+ax[1].set_ylim([0,np.max(H)])
+ax[1].set_xticks(np.linspace(np.min(e), np.max(e), 11))
+ax[1].set_yticks(np.linspace(0, np.max(H)+100, 21))
+plt.show()
 
 # plot the graph
 
@@ -38,3 +56,5 @@ plt.xlabel('Temperature &Virtual Tmeperature [K]', fontsize = 10)
 plt.legend(['T', 'Tv'], loc = 'upper right')
 
 plt.show()
+
+np.savetxt('qv_of_data.txt', 1000*qv)

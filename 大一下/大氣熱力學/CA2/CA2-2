@@ -26,18 +26,27 @@ dif = Tv-(T+273.15)
 
 
 # plot the difference
+fig, ax = plt.subplots(1,2, sharey = 'row')
 for i in range(len(dif)):
 	if (abs(dif[i])<0.1):
-		plt.axhline(y = H[i], xmin = 0, xmax = 1, color = 'pink', linewidth = 0.5)
-plt.axvline(x = 0.1, ymin = 0, ymax = 1, color = 'green', linewidth = 0.5)
-plt.plot(dif, H, linewidth = 0.5)
-plt.xlim([np.min(dif), np.max(dif)])
-plt.ylim([0,np.max(H)])
-plt.xticks(np.linspace(np.min(dif), np.max(dif), 11))
-plt.yticks(np.linspace(0,np.max(H), 11))
-plt.title('Difference between Temperature & Virtual Temperature as Altitude Increasing', fontsize = 15)
-plt.xlabel('Difference between Temperature & Virtual Temperature [K]', fontsize = 15)
-plt.ylabel('Altitude [m]', fontsize = 15)
+		ax[0].axhline(y = H[i], xmin = 0, xmax = 1, color = 'pink', linewidth = 0.5)
+ax[0].axvline(x = 0.1, ymin = 0, ymax = 1, color = 'green', linewidth = 0.5)
+ax[0].plot(dif, H, linewidth = 0.5)
+ax[0].set_xlim([np.min(dif), np.max(dif)])
+ax[0].set_ylim([0,np.max(H)])
+ax[0].set_xticks(np.linspace(np.min(dif), np.max(dif), 11))
+ax[0].set_yticks(np.linspace(0,np.max(H), 11))
+ax[0].set_title('Difference between Temperature & Virtual Temperature as Altitude Increasing', fontsize = 15)
+ax[0].set_xlabel('Difference between Temperature & Virtual Temperature [K]', fontsize = 15)
+ax[0].set_ylabel('Altitude [m]', fontsize = 15)
+
+ax[1].plot(1000*qv, H, linewidth = 0.5)
+ax[1].set_xlim([np.min(1000*qv), np.max(1000*qv)])
+ax[1].set_ylim([0,np.max(H)])
+ax[1].set_xticks(np.linspace(np.min(1000*qv), np.max(1000*qv), 11))
+ax[1].set_yticks(np.linspace(0,np.max(H), 11))
+ax[1].set_title('Specific Humidity as Altitude Increasing', fontsize = 15)
+ax[1].set_xlabel('Specific Humidity [g/kg]', fontsize = 15)
 
 plt.savefig('dif.png', dpi = 600)
 plt.show()
