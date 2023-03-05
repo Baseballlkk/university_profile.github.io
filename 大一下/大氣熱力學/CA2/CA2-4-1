@@ -25,9 +25,6 @@ qv = (epsilon*e)/(P-(1-epsilon)*e)
 # Calculate for virtual temperature
 Tv = (1+(1/epsilon-1)*qv)*(T+273.15)
 
-# density of the initial dry air
-rho = P[0]/(287*Tv[0])
-
 # Temperature of dry air
 for i in range(len(Td)-1):
 	Td[i+1] = Td[i]-9.8*(H[i+1]-H[i])/1000
@@ -35,18 +32,16 @@ for i in range(len(Td)-1):
 # Calculate for buoyancy
 f = (Td-Tv)/Tv*9.8
 
-# plot the graph
-plt.plot(f, H, linewidth = 0.5)
-plt.axhline(y = 1000, xmin = 0, xmax = 1, color = 'red', linewidth = 0.5)
-plt.axhline(y = 15112, xmin = 0, xmax = 1, color = 'red', linewidth = 0.5)
-plt.xlim([np.min(f), np.max(f)])
+# plt dif 
+plt.plot(Td, H, linewidth = 0.5)
+plt.plot(Tv, H, linewidth = 0.5)
+plt.xlim([np.min(Td), np.max(Td)])
 plt.ylim([0, np.max(H)+100])
-plt.xticks(np.linspace(np.min(f), np.max(f), 6))
+plt.xticks(np.linspace(np.min(Td), np.max(Td), 6))
 plt.yticks(np.linspace(0, np.max(H)+100, 21))
-plt.xlabel('Buoyancy Acceleration [m/$s^2$]', fontsize = 15)
+plt.xlabel('Virtual Temperature of Dry Air Parcel & Surrounding', fontsize = 15)
 plt.ylabel('Altitude [m]', fontsize = 15)
-plt.title('Buoyancy Profile (+10K) as Altitude Increasing', fontsize = 15)
-
-plt.savefig('fb+10-H.png', dpi = 600)
+plt.title('Virtual Temperature of Dry Air Parcel(+10 K) & Surrounding as Altitude Increasing', fontsize = 15)
+plt.legend(['Dry Air', 'Sur'])
 
 plt.show()
