@@ -15,7 +15,6 @@ TK = T+273.15
 
 # array for dry air
 Td = np.zeros(len(T))
-Td[0] = TK[0]+10
 
 # calculate for specific humidity
 es = A*np.exp(-B/(T+273.15))
@@ -24,6 +23,8 @@ qv = (epsilon*e)/(P-(1-epsilon)*e)
 
 # Calculate for virtual temperature
 Tv = (1+(1/epsilon-1)*qv)*(T+273.15)
+
+Td[0] = Tv[0]+10
 
 # Temperature of dry air
 for i in range(len(Td)-1):
