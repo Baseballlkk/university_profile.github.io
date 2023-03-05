@@ -37,6 +37,17 @@ for i in range(len(Td)-1):
 # Calculate for buoyancy
 f = (Td-Tv)/Tv*9.8
 
+for i in range(len(f)):
+	if (H[i]==997):
+		f1 = f[i]
+	elif (H[i]==1002):
+		f2 = f[i]
+	elif (H[i]==15512):
+		print(f[i])	
+
+f1000 = f1+(f2-f1)/(1002-997)*3
+print(f1000)
+
 # plot the graph
 plt.plot(f, H, linewidth = 0.5)
 plt.axhline(y = 1000, xmin = 0, xmax = 1, color = 'red', linewidth = 0.5)
