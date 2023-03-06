@@ -1,0 +1,11 @@
+import math as m
+import numpy as np
+import myfunc as mf
+
+x = m.pi/3
+
+tc = mf.tc3(x)
+
+# calculate error
+er = abs((tc-0.5)/0.5)
+print(er)

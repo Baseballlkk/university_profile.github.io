@@ -1,0 +1,12 @@
+import STC as s
+
+w = 10*10**(-3)
+p0 = 1000*10**2
+T0 = 300
+TOL = 10**(-6)
+x1 = float(input("Input x1: "))
+x2 = float(input("Input x2: "))
+
+Tc = s.Solve_Tc(w, p0, T0, x1, x2, TOL)
+
+print(Tc)
