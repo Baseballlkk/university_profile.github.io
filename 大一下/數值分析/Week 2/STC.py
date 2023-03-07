@@ -7,7 +7,7 @@ B = 5420
 ka = 7/2
 
 
-def Solve_Tc(w, p0, T0, x1, x2, TOL):
+def Solve_Tc(x1, x2, w, p0, T0, TOL):
 	
-	Tc = mf.bisectionmathod(TOL, x1, x2)
+	Tc = mf.bisectionmathod(x1, x2, w, p0, T0, TOL)
 	return(Tc)

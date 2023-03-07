@@ -1,12 +1,12 @@
-import STC as s
+import myfunc as mf
 
-w = 10*10**(-3)
-p0 = 1000*10**2
-T0 = 300
-TOL = 10**(-6)
+w = float(input("Input w[g/g]:"))
+p0 = float(input("Input p0 [hPa]:"))
+T0 = float(input("Input T0 [K]:"))
+TOL = float(input("Input TOL:"))
 x1 = float(input("Input x1: "))
 x2 = float(input("Input x2: "))
 
-Tc = s.Solve_Tc(w, p0, T0, x1, x2, TOL)
+Tc = mf.bisectionmathod(x1, x2, w, p0, T0, TOL)
 
 print(Tc)

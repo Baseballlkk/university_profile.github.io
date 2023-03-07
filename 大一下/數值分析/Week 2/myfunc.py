@@ -1,6 +1,6 @@
 import math as m
 import myfunc as mf
-import function as f
+import bad as b
 
 # factorial
 def factorial(x):
@@ -30,12 +30,17 @@ def tc3(x):
 	return(ta)
 
 # Bisection Method
-def bisectionmathod(TOL, x1, x2):
-	while (TOL < x2-x1):
-		x3 = (1/2)*(x1+x2)
-		if (f.func(x1)*f.func(x3)<0):
+def bisectionmathod(x1, x2, w, p0, T0, TOL):
+	
+	f1 = b.func(w, p0 ,T0, x1)
+
+	while (x2-x1 > TOL):
+		x3 = (x1+x2)/2
+		f3 = b.func(w, p0, T0, x3)
+		if (f1*f3<0):
 			x2 = x3
 		else :
 			x1 = x3
-	return(x3)
+	x = (x1+x2)/2
+	return x
 		
