@@ -2,22 +2,18 @@
 This is a package for atmospheric science assignment
 including :
 1. 1D plot function
-2. thermodynamics
 '''
 
 import numpy as np
 from matplotlib import pyplot as plt
 
-def one_dimension_plot(f, H,minus_y = 0, add_y=0):
+def single_line(f, H, minus_x = 0, add_x = 0, minus_y = 0, add_y=0, x = '', y_string = '', title = ''):
 	plt.plot(f, H, linewidth = 0.5)
-	plt.xticks(np.linspace(np.min(f), np.max(f), 6))
+	plt.xticks(np.linspace(np.min(f)-minus_x, np.max(f)+add_x, 6))
 	plt.yticks(np.linspace(0-minus_y, np.max(H)+add_y, 21))
-	plt.xlim([np.min(f), np.max(f)])
+	plt.xlim([np.min(f)-minus_x, np.max(f)+add_x])
 	plt.ylim([np.min(H)-minus_y, np.max(H)+add_y])
-
-def thermodyamics():
-	def virtual_temp(qv, T):
-		epsilon = 0.622
-		Tc = (1+((1/epsilon-1)*qv))*T
-		
-		return Tc
+	plt.xlabel(x)
+	plt.ylabel(y_string)
+	plt.title(title)
+	
