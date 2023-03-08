@@ -14,12 +14,14 @@ num_steps = 10000
 xs = np.empty(num_steps + 1)
 ys = np.empty(num_steps + 1)
 zs = np.empty(num_steps + 1)
+t = np.empty(num_steps+1)
 
 # Set initial values
-xs[0], ys[0], zs[0] = (0.1, 0.0, 0.0)
+xs[0], ys[0], zs[0] = (0.0001, 0.0, 0.0)
 
 # Run the simulation
 for i in range(num_steps):
+    t[i+1] = t[i]+dt
     x_dot, y_dot, z_dot = lorenz(xs[i], ys[i], zs[i])
     xs[i+1] = xs[i] + (x_dot * dt)
     ys[i+1] = ys[i] + (y_dot * dt)
