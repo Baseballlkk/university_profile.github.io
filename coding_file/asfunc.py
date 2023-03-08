@@ -18,6 +18,6 @@ def one_dimension_plot(f, H,minus_y = 0, add_y=0):
 def thermodyamics():
 	def virtual_temp(qv, T):
 		epsilon = 0.622
-		Tc = (1+((1-epsilon)/epsilon)*qv)*T
+		Tc = (1+((1/epsilon-1)*qv))*T
 		
 		return Tc
