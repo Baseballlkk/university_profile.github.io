@@ -27,3 +27,6 @@ def Newton_Method(x1, h, TOL):
         xa = x-(f(x)/df(x))
     
     return xa
+
+
+# def Secant_Method(x0, x1):
