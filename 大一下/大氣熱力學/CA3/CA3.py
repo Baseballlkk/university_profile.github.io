@@ -27,6 +27,14 @@ theta = T*(p0/P)**(Rd/Cp)
 # calculate for theta_v
 theta_v = T*(1+0.608*qv)*(p0/P)**(Rd/Cp)
 
+Tv = (1+(1/ep-1)*qv)*T
+
+def find_nearest(array, value):
+    idxarray = np.empty(len(array))
+    for i in range(len(array)):
+        idxarray[i] = abs(array[i]-value)
+    idx = np.argmin(idxarray)
+    return idx
 '''
 # plot the graph of theta_v
 fig = plt.figure(figsize = (8,6))
@@ -60,6 +68,24 @@ plt.legend([r'$\theta_v$', r'$\theta$'])
 plt.savefig('Virtual_Potential_Temperature_andtheta_to_Altitude.png', dpi = 300)
 plt.show()
 
+
+
+# plot dry air
+fig = plt.figure(figsize = (8,6))
+plt.plot(theta_v-theta, H, lw = 0.5)
+plt.xlim([np.min(theta_v-theta),np.max(theta_v-theta)])
+plt.ylim([0, np.max(H)+1000])
+plt.xticks(np.linspace(np.min(theta_v-theta),np.max(theta_v-theta), 5))
+plt.yticks(np.linspace(0, np.max(H)+1000, 11))
+plt.title(r'$\theta_v - \theta$- Altitude profile', fontsize = 15)
+plt.xlabel(r'Difference between $\theta_v - \theta$ [K]', fontsize = 15)
+plt.ylabel('Altitude [m]', fontsize = 15)
+
+plt.savefig('Difference_between_Virtual_Potential_Temperature_and_theta_to_Altitude.png', dpi = 300)
+plt.show()
+
+
+
 # plot the difference
 fig = plt.figure(figsize = (8,6))
 dif = theta_v-theta
@@ -74,6 +100,7 @@ plt.ylabel('Altitude [m]', fontsize = 15)
 plt.legend(['Difference'])
 plt.savefig('Difference.png', dpi = 300)
 plt.show()
+
 
 # lapse rate of surrounding
 def lapse(arr1, arr2):
@@ -99,24 +126,48 @@ def ma(array, num):
             arrayout[i-num] = t/(2*num+1)
 
     return arrayout
+time =int(input('Input times: '))
 
 lapse_rate = lapse(T, H)
-ma_lapse_rate = ma(lapse_rate, 300)
-ma_altitude = ma(H, 300)
+ma_lapse_rate = ma(lapse_rate, time)
+ma_altitude = ma(H, time)
+
+
 
 fig = plt.figure(figsize = (8,6))
-plt.plot(-9.8-ma_lapse_rate, ma_altitude[:(len(ma_altitude)-1)], lw = 0.5)
-plt.axvline(x = -9.8, ymin = 0, ymax = 1, lw = 0.5, color = 'orange')
-plt.xlim([-9.82, -9.78])
+plt.axhline(y = 1.677e4, xmin = 0, xmax = 1, lw = 0.5, color = 'orange')
+plt.axhline(y = 1.473e4, xmin = 0, xmax = 1, lw = 0.5, color = 'orange')
+plt.axhline(y = H[find_nearest(-9.8-ma_lapse_rate*1000, -9.8)], xmin = 0, xmax = 1)
+plt.axvline(x = -9.8, ymin = 0, ymax = 1, lw = 0.5, color = 'green')
+plt.plot(-9.8-ma_lapse_rate*1000, ma_altitude[:(len(ma_altitude)-1)], lw = 0.5)
+plt.fill_between(-9.8-ma_lapse_rate*1000, y1 = 1.473e4, y2 = 1.677e4, color = 'orange')
+plt.xlim([np.min(-9.8-ma_lapse_rate*1000), np.max(-9.8-ma_lapse_rate*1000)])
 plt.ylim([0, np.max(H)+1000])
-plt.xticks(np.linspace(-9.82, -9.78, 5))
+plt.xticks(np.linspace(-20, 0, 5))
 plt.yticks(np.linspace(0, np.max(H)+1000, 11))
 plt.xlabel('Difference between lapse rate [K/Km]', fontsize = 15)
 plt.ylabel('Altitude [m]', fontsize = 15)
-plt.title('Difference between lapse rate vs. Altitude', fontsize = 15)
+plt.title('Difference between lapse rate with smooth average 100 times vs. Altitude', fontsize = 15)
+plt.savefig('Difference between lapse rate with smooth average 100 times vs. Altitude.png', dpi = 300)
+plt.show()
+
+for i in range(len(ma_lapse_rate*1000)):
+    if ma_lapse_rate[i]*1000>0:
+        plt.axhline(y = H[i], xmin = 0, xmax = 1, color = 'pink', lw = 0.5)
+        print(H[i])
+plt.plot(ma_lapse_rate*1000, ma_altitude[:(len(ma_altitude)-1)], lw = 0.5)
+plt.axvline(x = 0, ymin = 0, ymax = 1, lw = 0.5, color = 'green')
+plt.axhline(y = 1.580e4, xmin = 0, xmax = 1, lw = 0.5, color = 'black')
+plt.xlim([np.min(ma_lapse_rate*1000), np.max(ma_lapse_rate*1000)])
+plt.ylim([0, np.max(H)+1000])
+plt.xticks(np.linspace(np.min(ma_lapse_rate*1000), np.max(ma_lapse_rate*1000), 6))
+plt.yticks(np.linspace(0, np.max(H)+1000, 11))
+plt.xlabel('lapse rate [K/Km]', fontsize = 15)
+plt.ylabel('Altitude [m]', fontsize = 15)
+plt.title('lapse rate with smooth average 100 times vs. Altitude', fontsize = 15)
+plt.savefig(' lapse rate with smooth average 100 times vs. Altitude.png', dpi = 300)
 plt.show()
 '''
-
 # 3
 epsilon = 0.622
 Rd = 287
@@ -129,29 +180,28 @@ dz = np.empty(18)
 dz_add = np.empty(18)
 Pf = np.empty(18)
 
-def find_nearest(array, value):
-    idxarray = np.empty(len(array))
-    for i in range(len(array)):
-        idxarray[i] = abs(array[i]-value)
-    idx = np.argmin(idxarray)
-    return idx
+
 
 # method 1: fing the nearest point
+
 for i in range(18):
     Pf[i] = 1000-50*i
-    dz[i] = -(Rd/(2*g))*np.log((Pf[i]-10)/Pf[i])*(Tv[find_nearest(P, (Pf[i]-10))]+Tv[find_nearest(P, Pf[i])])
-    dz_add[i] = -(Rd/(2*g))*np.log((Pf[i]-10)/Pf[i])*(Tv[find_nearest(P, (Pf[i]-10))]+Tv[find_nearest(P, Pf[i])]+20)
+    print(np.log(Pf[i]/(Pf[i]-10)))
+    print(np.log((P[find_nearest(P, Pf[i])])/(P[find_nearest(P, (Pf[i]-10))])))
+    dz_sub = Tv[find_nearest(P, Pf[i]):(find_nearest(P, (Pf[i]-10)))]
+    dz[i] = (Rd/g)*np.log((P[find_nearest(P, Pf[i])])/(P[find_nearest(P, (Pf[i]-10))]))*np.nanmean(dz_sub)
+    dz_add_sub = Tv_add[find_nearest(P, Pf[i]):(find_nearest(P, (Pf[i]-10))+1)]
+    dz_add[i] = (Rd/(g))*np.log((P[find_nearest(P, Pf[i])])/(P[find_nearest(P, (Pf[i]-10))]))*(np.nanmean(dz_add_sub))
 
-'''
 plt.scatter(dz, Pf, s = 10)
 plt.scatter(dz_add, Pf, s = 10)
 plt.xlim([np.min(dz), np.max(dz_add)])
 plt.ylim([np.max(P), np.min(Pf)-10])
-plt.xticks(np.linspace(140, 695, 6))
+plt.xticks(np.linspace(np.min(dz_add), np.max(dz), 6))
 plt.yticks(Pf)
 plt.xlabel('Physical Depth [m]', fontsize = 15)
 plt.ylabel('Pressure [hPa]', fontsize = 15)
-plt.title('Physical Depth of 10 hPa per 50 hPa by Nearest Point', fontsize = 15)
+plt.title('Physical Depth by Nearest Point', fontsize = 15)
 plt.legend([r'$T_v$', r'$T_v+10$'], loc = 'lower right')
 
 plt.savefig('Physical_Depth_by_1.png', dpi = 300)
@@ -161,76 +211,58 @@ plt.plot(dz_add-dz, Pf, lw = 0.5)
 plt.scatter(dz_add-dz, Pf, s = 10)
 plt.xlim([np.min(dz_add-dz), np.max(dz_add-dz)])
 plt.ylim([np.max(P), np.min(Pf)-10])
-plt.xticks(np.linspace(2.5, 20.5, 5))
+plt.xticks(np.linspace(np.min(dz_add-dz), np.max(dz_add-dz), 5))
 plt.yticks(Pf)
-plt.xlabel('Differnce of Physical Depth [m]', fontsize = 15)
+plt.xlabel('Difference of Physical Depth [m]', fontsize = 15)
 plt.ylabel('Pressure [hPa]', fontsize = 15)
-plt.title('Physical Depth Difference of 10 hPa per 50 hPa by Nearest Point', fontsize = 15)
+plt.title('Physical Depth Difference by Nearest Point', fontsize = 15)
 
 plt.savefig('Physical_Depth_Difference_by_1.png', dpi = 300)
 plt.show()
-'''
+
 # method 2: Interpolar method
 dz2 = np.empty(18)
-dz_add2 = np.empty(18)
-Pf2 = np.empty(18)
 
 def interpolate(array1, array2, value):
-    ip = (array2[find_nearest(array1, value)+1]-array2[find_nearest(array1, value)])/(array1[find_nearest(array1, value)+1]-find_nearest(array1, value)+1)*(value-find_nearest(array1, value)+1)+array2[find_nearest(array1, value)]
+    if array1[find_nearest(array1, value)]<value:
+        ip = (array2[find_nearest(array1, value)+1]-array2[find_nearest(array1, value)])/(array1[find_nearest(array1, value)+1]-array1[find_nearest(array1, value)])*(value-array1[find_nearest(array1, value)])+array2[find_nearest(array1, value)]
+    
+    elif array1[find_nearest(array1, value)] == value:
+        ip = array2[find_nearest(array1, value)]
+    else :
+        ip = (array2[find_nearest(array1, value)]-array2[find_nearest(array1, value)-1])/(array1[find_nearest(array1, value)]-array1[find_nearest(array1, value)-1])*(value-array1[find_nearest(array1, value)-1])+array2[find_nearest(array1, value)-1]
+
     return ip
 
 for i in range(18):
-    Pf2[i] = 1000-50*i
-    dz2[i] = -(Rd/(2*g))*np.log((Pf2[i]-10)/Pf2[i])*(interpolate(P, Tv, (Pf2[i]-10))+interpolate(P, Tv, Pf2[i]))
-    dz_add2[i] = -(Rd/(2*g))*np.log((Pf2[i]-10)/Pf2[i])*(interpolate(P, Tv, (Pf2[i]-10))+interpolate(P, Tv, Pf2[i])+20)
-'''
-plt.scatter(dz2, Pf2, s = 10)
-plt.scatter(dz_add2, Pf2, s = 10)
-plt.xlim([np.min(dz2), np.max(dz_add2)])
-plt.ylim([np.max(P), np.min(Pf2)-10])
-plt.xticks(np.linspace(140, 695, 6))
-plt.yticks(Pf2)
-plt.xlabel('Physical Depth [m]', fontsize = 15)
-plt.ylabel('Pressure [hPa]', fontsize = 15)
-plt.title('Physical Depth of 10 hPa per 50 hPa by Interpolation', fontsize = 15)
-plt.legend([r'$T_v$', r'$T_v+10$'], loc = 'lower right')
+    dz2[i] = interpolate(P, H, (Pf[i]-10))-interpolate(P, H, (Pf[i]))
+print(dz)
+print(dz2)
 
-plt.savefig('Physical_Depth_by_2.png', dpi = 300)
+plt.scatter(dz2, Pf, s = 10)
+plt.xlim([np.min(dz2), np.max(dz2)])
+plt.ylim([np.max(P), np.min(Pf)-10])
+plt.xticks(np.linspace(np.min(dz2), np.max(dz2), 6))
+plt.yticks(Pf)
+plt.xlabel(' Real Physical Depth [m]', fontsize = 15)
+plt.ylabel('Pressure [hPa]', fontsize = 15)
+plt.title('Real Physical Depth ', fontsize = 15)
+
+plt.savefig('Physical_Depth.png', dpi = 300)
 plt.show()
 
-plt.plot(dz_add2-dz2, Pf, lw = 0.5)
-plt.scatter(dz_add2-dz2, Pf, s = 10)
-plt.xlim([np.min(dz_add2-dz2), np.max(dz_add2-dz2)])
-plt.ylim([np.max(P), np.min(Pf2)-10])
-plt.xticks(np.linspace(2.5, 20.5, 5))
+# error between the real and near point
+err = (dz-dz2)/(dz2)*100
+
+print(err)
+plt.scatter(err, Pf, s = 10)
+plt.xlim([np.min(err), np.max(err)])
+plt.ylim([np.max(P), np.min(Pf)-10])
+plt.xticks(np.linspace(np.min(err), np.max(err), 6))
 plt.yticks(Pf)
-plt.xlabel('Differnce of Physical Depth [m]', fontsize = 15)
+plt.xlabel(' Difference of Physical Depth [%]', fontsize = 15)
 plt.ylabel('Pressure [hPa]', fontsize = 15)
-plt.title('Physical Depth Difference of 10 hPa per 50 hPa by Interpolation', fontsize = 15)
+plt.title('Difference of Physical Depth between near point and real ', fontsize = 15)
 
-plt.savefig('Physical_Depth_Difference_by_2.png', dpi = 300)
-plt.show()
-'''
-
-
-# Difference between the two method
-err_dz = (dz2-dz)/dz2*100
-err_dz_add = (dz_add2-dz_add)/dz_add2*100
-print(err_dz)
-print(err_dz_add)
-
-
-plt.scatter(err_dz, Pf, s = 10)
-plt.plot(err_dz, Pf, lw = 0.5)
-plt.scatter(err_dz_add, Pf, s = 10)
-plt.plot(err_dz_add, Pf, lw = 0.5)
-plt.xlim([np.min(err_dz), 0.01])
-plt.ylim([np.max(P), np.min(Pf2)-10])
-plt.xticks(np.linspace(-0.05, 0., 6))
-plt.yticks(Pf)
-plt.xlabel('Relative Error [%]', fontsize = 15)
-plt.ylabel('Pressure', fontsize = 15)
-plt.title('Relative Error between the Two Method', fontsize = 15)
-plt.legend([r'err_$Tv$', '',r'err_$T_v+10$', ''], loc = 'best')
-plt.savefig('savefig.png')
+plt.savefig('Difference_Physical_Depth.png', dpi = 300)
 plt.show()
