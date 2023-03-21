@@ -1,6 +1,7 @@
 # import library
 import numpy as np
 from matplotlib import pyplot as plt
+import pandas as pd
 
 # set constant
 a = 2.53*1e8
@@ -85,7 +86,7 @@ plt.savefig('Difference_between_Virtual_Potential_Temperature_and_theta_to_Altit
 plt.show()
 
 
-
+'''
 # plot the difference
 fig = plt.figure(figsize = (8,6))
 dif = theta_v-theta
@@ -111,7 +112,7 @@ def lapse(arr1, arr2):
         diff_1 = arr1[i+1]-arr1[i]
         diff_2 = arr2[i+1]-arr2[i]
         if (diff_2 != 0):
-            arr[i] = diff_1/diff_2
+            arr[i] = -diff_1/diff_2
         else :
             arr[i] = np.nan
     return arr
@@ -135,15 +136,11 @@ ma_altitude = ma(H, time)
 
 
 fig = plt.figure(figsize = (8,6))
-plt.axhline(y = 1.677e4, xmin = 0, xmax = 1, lw = 0.5, color = 'orange')
-plt.axhline(y = 1.473e4, xmin = 0, xmax = 1, lw = 0.5, color = 'orange')
-plt.axhline(y = H[find_nearest(-9.8-ma_lapse_rate*1000, -9.8)], xmin = 0, xmax = 1)
-plt.axvline(x = -9.8, ymin = 0, ymax = 1, lw = 0.5, color = 'green')
-plt.plot(-9.8-ma_lapse_rate*1000, ma_altitude[:(len(ma_altitude)-1)], lw = 0.5)
-plt.fill_between(-9.8-ma_lapse_rate*1000, y1 = 1.473e4, y2 = 1.677e4, color = 'orange')
-plt.xlim([np.min(-9.8-ma_lapse_rate*1000), np.max(-9.8-ma_lapse_rate*1000)])
+plt.axvline(x = 9.8, ymin = 0, ymax = 1, lw = 0.5, color = 'green')
+plt.plot(9.8-ma_lapse_rate*1000, ma_altitude[:(len(ma_altitude)-1)], lw = 0.5)
+plt.xlim([np.min(9.8-ma_lapse_rate*1000), np.max(9.8-ma_lapse_rate*1000)])
 plt.ylim([0, np.max(H)+1000])
-plt.xticks(np.linspace(-20, 0, 5))
+plt.xticks(np.linspace(0, 20, 5))
 plt.yticks(np.linspace(0, np.max(H)+1000, 11))
 plt.xlabel('Difference between lapse rate [K/Km]', fontsize = 15)
 plt.ylabel('Altitude [m]', fontsize = 15)
@@ -151,16 +148,18 @@ plt.title('Difference between lapse rate with smooth average 100 times vs. Altit
 plt.savefig('Difference between lapse rate with smooth average 100 times vs. Altitude.png', dpi = 300)
 plt.show()
 
-for i in range(len(ma_lapse_rate*1000)):
-    if ma_lapse_rate[i]*1000>0:
-        plt.axhline(y = H[i], xmin = 0, xmax = 1, color = 'pink', lw = 0.5)
+fig = plt.figure(figsize = (8,6))
+
+for i in range(len(ma_lapse_rate)):
+    if (ma_lapse_rate[i]*1000) <= 2:
+        plt.axhline(y = H[i], xmin = 0, xmax = 1, color = 'red', lw = 0.5)
         print(H[i])
+        break
 plt.plot(ma_lapse_rate*1000, ma_altitude[:(len(ma_altitude)-1)], lw = 0.5)
 plt.axvline(x = 0, ymin = 0, ymax = 1, lw = 0.5, color = 'green')
-plt.axhline(y = 1.580e4, xmin = 0, xmax = 1, lw = 0.5, color = 'black')
 plt.xlim([np.min(ma_lapse_rate*1000), np.max(ma_lapse_rate*1000)])
 plt.ylim([0, np.max(H)+1000])
-plt.xticks(np.linspace(np.min(ma_lapse_rate*1000), np.max(ma_lapse_rate*1000), 6))
+plt.xticks(np.linspace(-9.5, 9.5, 5))
 plt.yticks(np.linspace(0, np.max(H)+1000, 11))
 plt.xlabel('lapse rate [K/Km]', fontsize = 15)
 plt.ylabel('Altitude [m]', fontsize = 15)
@@ -173,7 +172,7 @@ epsilon = 0.622
 Rd = 287
 g = 9.80
 
-Tv = (1+((1/epsilon)-1))*T
+Tv = (1+0.608*qv)*T
 Tv_add = Tv+10
 
 dz = np.empty(18)
@@ -186,18 +185,18 @@ Pf = np.empty(18)
 
 for i in range(18):
     Pf[i] = 1000-50*i
-    print(np.log(Pf[i]/(Pf[i]-10)))
-    print(np.log((P[find_nearest(P, Pf[i])])/(P[find_nearest(P, (Pf[i]-10))])))
     dz_sub = Tv[find_nearest(P, Pf[i]):(find_nearest(P, (Pf[i]-10)))]
     dz[i] = (Rd/g)*np.log((P[find_nearest(P, Pf[i])])/(P[find_nearest(P, (Pf[i]-10))]))*np.nanmean(dz_sub)
+    # dz[i] = (Rd/g)*np.log(Pf[i]/(Pf[i]-10))*np.mean(dz_sub)
     dz_add_sub = Tv_add[find_nearest(P, Pf[i]):(find_nearest(P, (Pf[i]-10))+1)]
     dz_add[i] = (Rd/(g))*np.log((P[find_nearest(P, Pf[i])])/(P[find_nearest(P, (Pf[i]-10))]))*(np.nanmean(dz_add_sub))
+    # dz_add[i] = (Rd/(g))*np.log(Pf[i]/(Pf[i]-10))*(np.mean(dz_add_sub))
 
 plt.scatter(dz, Pf, s = 10)
 plt.scatter(dz_add, Pf, s = 10)
 plt.xlim([np.min(dz), np.max(dz_add)])
 plt.ylim([np.max(P), np.min(Pf)-10])
-plt.xticks(np.linspace(np.min(dz_add), np.max(dz), 6))
+plt.xticks(np.linspace(100, 440, 5))
 plt.yticks(Pf)
 plt.xlabel('Physical Depth [m]', fontsize = 15)
 plt.ylabel('Pressure [hPa]', fontsize = 15)
@@ -211,7 +210,7 @@ plt.plot(dz_add-dz, Pf, lw = 0.5)
 plt.scatter(dz_add-dz, Pf, s = 10)
 plt.xlim([np.min(dz_add-dz), np.max(dz_add-dz)])
 plt.ylim([np.max(P), np.min(Pf)-10])
-plt.xticks(np.linspace(np.min(dz_add-dz), np.max(dz_add-dz), 5))
+plt.xticks(np.linspace(2.8, 20.2, 4))
 plt.yticks(Pf)
 plt.xlabel('Difference of Physical Depth [m]', fontsize = 15)
 plt.ylabel('Pressure [hPa]', fontsize = 15)
@@ -242,7 +241,7 @@ print(dz2)
 plt.scatter(dz2, Pf, s = 10)
 plt.xlim([np.min(dz2), np.max(dz2)])
 plt.ylim([np.max(P), np.min(Pf)-10])
-plt.xticks(np.linspace(np.min(dz2), np.max(dz2), 6))
+plt.xticks(np.linspace(80, 420, 5))
 plt.yticks(Pf)
 plt.xlabel(' Real Physical Depth [m]', fontsize = 15)
 plt.ylabel('Pressure [hPa]', fontsize = 15)
@@ -258,7 +257,7 @@ print(err)
 plt.scatter(err, Pf, s = 10)
 plt.xlim([np.min(err), np.max(err)])
 plt.ylim([np.max(P), np.min(Pf)-10])
-plt.xticks(np.linspace(np.min(err), np.max(err), 6))
+plt.xticks(np.linspace(-2, 14.2, 4))
 plt.yticks(Pf)
 plt.xlabel(' Difference of Physical Depth [%]', fontsize = 15)
 plt.ylabel('Pressure [hPa]', fontsize = 15)
@@ -266,3 +265,4 @@ plt.title('Difference of Physical Depth between near point and real ', fontsize 
 
 plt.savefig('Difference_Physical_Depth.png', dpi = 300)
 plt.show()
+'''
