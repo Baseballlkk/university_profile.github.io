@@ -1,0 +1,13 @@
+迴圈(類似 while)
+
+DO <counter> = <start>, <end>, <interval>
+	....
+
+END DO
+
+其中
+1. <counter> 必須為整數變數
+2. <start>, <end>, <interval> 可為整數變數或整數常數
+3. <interval> 預設值為1
+4. <interval> 可為負數 (<counter> 遞減)
+5. 迴圈由 <start> 開始，<end>結束，執行 1+(end-start)/interval 次

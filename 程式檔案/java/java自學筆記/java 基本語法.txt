@@ -1,0 +1,89 @@
+class 用於定義編寫的程式，出現在程式的開頭
+
+main(): 主要程式碼包含的範圍，前置public static 定義main的狀態
+
+括號內: String[] args
+	String[] 表示一種陣列，每一個陣列稱為指令列引數，用於改變程式的執行
+
+variables
+	1. instance variable (non-static fields)
+		do not need to declare with static
+		used to store the state of class
+	2. class variabels (static fields)
+		the variables that can be used in application for many times
+		/*final static int means the value will never change*/
+	3. Local Variables
+		store the state of temporary state.
+		syntax is similar to field
+	4. Parameter
+		parameter is always classified as variables.
+
+naming rule
+	can include unicode, $, _, but must begin with unicode.
+	$ should not be use in naming.
+	space is not permitted
+
+data type
+	byte: 8-bit, using to save large array
+	short: short integer
+	int: use to store integer value
+	long: long integer
+	float: the value which is not integer
+	double: float with more decimal
+	boolean: true/false
+	chａｒ：ｗｒｉｔｅ　ｉｎ　ｕｎｉｃｏｄｅ
+
+array
+	declare:
+		<data type>[] <array_name>;
+	create data with size n:
+		<array_name> = new <data_type>[n]
+	initialize:
+		<array_name>[index] = <number>
+		or
+		<array_name> = {num1,num2....}
+	array of array
+		<data_type>[][] names = {{},{}}
+	the length of array
+		<array_name>.length
+	copy array
+		System.arraycopy(<original_array>,<start index1>,<target array>,<starting_index2>,<final index>)
+
+operators
+	assignment
+		<data_type> <var> = <value>;
+	aruthmetic
+		+, -, *, /, %
+		<p.s.> strings can connected by '+'	
+		<p.s.> x+=1  ==  x=x+1
+	Unary operator
+		+: positive mark
+		-: negative mark
+		++: plus 1
+		--: minus 1
+		!: not
+	Equality and Relational Operators
+		==: equal to
+		!=: not equal to
+		>: greater than
+		>=: greater or equal to 
+		<: lesser than
+		<=: lesser or equal to
+	conditional  operator
+		&&: and
+		||: or
+ 	instanceof:
+		judging if the object belong to class
+	Bitwise and Bit Shift Operators
+		Bitwise: 
+			~: 0->1; 1->0
+Expression: 
+	1. variables+operators+method invocation
+	2. data type is decided by elements.
+	3. if there is no special operators, the expression will conduct in default value.
+Statement
+	1. usually consist of expressions
+	2. must end with ;
+Blocks
+	1. a series of statement
+	2. included in {}

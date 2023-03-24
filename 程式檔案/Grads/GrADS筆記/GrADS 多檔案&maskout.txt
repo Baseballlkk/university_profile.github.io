@@ -1,0 +1,18 @@
+打開超過一個檔案時，會依開啟順序編號，最早開:1
+
+關閉檔案:從最後開開始關
+
+#數值篩選
+maskout(var,mask)
+mask為變數+篩選方式
+若計算後mask<0，會被篩選掉
+
+#填入數值
+
+const常和maskout合用
+const(var,n): 符合maskout的變數值化為n
+const(var,n,-u): 不符合maskout的變數值化為n
+const(var,n,-a): 所有網格化為n
+
+# 開啟NetCDF檔案
+sdfopen <filename>

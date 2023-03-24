@@ -1,0 +1,32 @@
+means=mean  !兩個陣列                                                
+cots=co     !兩個陣列
+dates=date  !兩個陣列
+mas=ma      !兩個陣列
+DO j=1,6
+    k=j
+    maximum=means(k)
+    maximumd=dates(k)
+    maximumc=cots(k)
+    maximumm=mas(k)
+    DO l=j+1,7
+        IF (means(l) > maximum) THEN
+            k=l
+            maximum=means(k)
+            maximumd=dates(k)
+            maximumc=cots(k)
+            maximumm=mas(k)
+        END IF
+    END DO
+    means(k)=means(j)
+    dates(k)=dates(j)
+    cots(k)=cots(j)
+    mas(k)=mas(j)
+
+    means(j)=maximum
+    dates(j)=maximumd
+    cots(j)=maximumc
+    mas(j)=maximumm
+
+    WRITE(20,200) dates(j),cots(j),means(j),mas(j)
+
+END DO

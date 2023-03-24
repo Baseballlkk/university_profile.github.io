@@ -1,0 +1,28 @@
+# import library
+import numpy as np
+import matplotlib.pyplot as plt
+import math as m
+import matplotlib.cm as cm
+from mpl_toolkits.mplot3d import Axes3D
+
+# math command
+m.sqrt()
+m.ceil()
+m.floor()
+m.exp()
+m.log()
+m.log10()
+m.sin()
+m.cos()
+m.tan()
+m.degrees()
+m.radians()
+
+# for route
+for i in range():
+
+# array
+<array>.append(<object>)
+<array>.insert(<object>,<place>)
+<array>.extend(<array>)
+

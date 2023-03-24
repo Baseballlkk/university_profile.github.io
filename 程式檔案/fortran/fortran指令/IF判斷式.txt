@@ -1,0 +1,37 @@
+IF 判斷迴圈
+
+IF (LOGOCAL EXPRESSION) THEN
+	....
+ELSEIF (LOGICAL EXPRESSION 1) THEN
+	....
+ELSEIF (LOGICAL EXPRESSION 2) THEN
+	....
+ELSE
+	....
+END IF (或寫成 ENDIF)
+
+邏輯判斷符號:
+
+==    相等
+/=    不相等
+>     大於
+>=    大於等於
+<     小於
+<=    小於等於
+
+邏輯組合:
+
+.AND. 交集
+.OR.  聯集
+.NOT. 差集
+
+判斷是過多可用 & 連結
+
+建立邏輯變數
+
+Logical :: <var>
+<var> 可以是判斷式或真假值
+
+<var> = (logical expression)
+<var> = .TRUE. / .FALSE.
+

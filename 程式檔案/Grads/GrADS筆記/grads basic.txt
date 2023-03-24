@@ -1,0 +1,56 @@
+GRADS必須含有資料檔及 .ctl檔
+
+# open file
+open <file name>   (only open .ctl file)
+
+# set picture area
+set parea <row realm> <column realm>
+ex: set parea 1 10 1 7.5
+
+# draw pictures
+d <file name>
+
+# add text of picture
+draw title <text>
+draw xlab <text>
+draw ylab <text>
+
+# clear original picture
+clear
+
+# a data per 'n' grid
+skip(data,n)
+
+# colored 
+mag(<data1>,<data2>)
+
+# contourf
+set gxout shaded
+
+# color bar
+cbar.gs -> cbar
+
+# set longitude latitude etc
+set lon <ulim> <blim>
+set lat <ulim> <blim>
+set t <month>
+
+# save picture
+printim <file name>.png
+
+# script file in grads
+.gs
+command need to be written in ''
+write comments -> *
+
+
+#restart script
+reinit
+
+# remote open file
+sdfopen <website>
+
+
+
+
+

@@ -1,0 +1,11 @@
+撰寫流程:
+    寫f95(讀取文字檔)
+    輸出為.dat(在輸出時設定為unformatted，並使用直接取存)
+        1.取得每筆資料長度(inquire) INQUIRE(IOLENGTH=LREC) TS
+        2.輸出時: unformatted, direct, recl 為查詢到的長度
+         
+
+    編譯並執行
+    寫出.ctl
+    開啟GrADS執行
+

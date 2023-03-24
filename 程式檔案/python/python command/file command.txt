@@ -1,0 +1,24 @@
+# open file
+<file object> = open("<file name>","<open_mode_option>")
+
+# check the file open or not
+<file object>.closed
+
+# ckeck mode of file
+<file object>.mode
+
+# file name
+<file object>.name
+
+# closed the file
+<fiile object>.close()
+
+# output toward file
+<file object>.write('<string>')
+
+# read file
+<file object>.readline()
+<file object>.readlines()
+
+# split string
+<array>.split(<symbol>)

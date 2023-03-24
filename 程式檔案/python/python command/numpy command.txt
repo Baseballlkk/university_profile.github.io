@@ -1,0 +1,39 @@
+# create numpy array
+<var> = np.array([])   (one dimension)
+<var> = np.array([[],[],[],[],[]])   (two dimension)
+
+# ask value
+<var>[<row>,<column>]
+<var>[a,b]   (a~b-1)
+
+# zero array
+<var> = np.zeros()   (one dimension)
+<var> = np.zeros((<row>,<column>))   (two dimension)
+
+# continuous value array
+<var> = np.arange(a,b,intv)
+<var> = np.linspace(a,b,n)   (n stand for the number after split)
+
+# list to numpy array
+<array> = np.asaray(<list>)
+
+# matrix product
+<var> = np.dot(c,d)   (the product is done by one to one)
+
+# reshape array
+np.reshape((a,b))
+
+# transpose matrix
+np.transpose(<var>)
+
+# copy
+np.tile(<array>,(n,m))
+
+# stack horizontally
+np.hstack(<array 1>,<array 2>)
+
+# stack vertically
+np.vstack(<array 1>,<array 2>)
+
+# column stack
+np.column_stack

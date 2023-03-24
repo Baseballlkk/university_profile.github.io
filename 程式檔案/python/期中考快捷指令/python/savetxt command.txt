@@ -1,0 +1,2 @@
+data = np.array(list(zip(D,T,U,V,WS,WD)),dtype=[('D','U5'),('T','U5'),('U','f8'),('V','f8'),('WS','f8'),('WD','f8')])
+np.savetxt('hw3a.txt',data,comments='',header = 'Date  Time   u[m/s] v[m/s] WS[m/s] WD[deg]',fmt='%5.5s %5.5s  %+5.2f  %+5.2f  %5.3f   %5.1f')

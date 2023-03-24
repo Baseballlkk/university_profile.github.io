@@ -1,0 +1,12 @@
+fig = plt.contourf(x,y,z,cm = ,levels = )
+plt.colorbar(fig,orientation = '')
+
+plt.plot(,,'')
+plt.xlim([])
+plt.ylim([])
+plt.xticks('',fontsize = )
+plt.yticks('',fontsize = )
+plt.xlabel('',fontsize = )
+plt.ylabel('',fontsize = )
+plt.title('',fontsize = )
+plt.legend([''])

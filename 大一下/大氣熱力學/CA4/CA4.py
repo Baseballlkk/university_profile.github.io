@@ -89,6 +89,7 @@ plt.legend(['T', r'$T_d$'])
 plt.savefig('Temp_of_dry.png', dpi = 600)
 plt.show()
 
+
 ## potential temperature
 fig = plt.figure(figsize = (8,6))
 plt.plot(Pt, H, lw = 0.5)
@@ -122,7 +123,7 @@ plt.legend([r'$\theta$', r'$\theta_d$'])
 
 plt.savefig('PTemp_of_dry_low.png', dpi = 600)
 plt.show()
-
+print(Ptd[0])
 ## dry static
 fig = plt.figure(figsize = (8,6))
 

@@ -1,0 +1,5 @@
+a,b,c,d = input('please input four numbers:')
+k = max(a,b,c,d)
+l = min(a,b,c,d)
+print('Maximum of the four number is:',k)
+print("Minimum of the four number is:",l)
