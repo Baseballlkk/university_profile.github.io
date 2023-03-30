@@ -76,11 +76,10 @@ for i in range(len(Td)-1):
 ## calculate for Ptd
 for i in range(len(Ptd)):
 
-    Ptd[i] = Pt[0]
+    Ptd[i] = Td[i]*(1000/P[i])**K
 
 ## calculate for Sdd
-for i in range(len(Sdd)):
-    Sdd = Sd[0]
+Sdd = Cp*Td+g*H
 
 ## plot T & Td
 fig = plt.figure(figsize = (8,6))
@@ -137,32 +136,32 @@ plt.show()
 ## dry static
 fig = plt.figure(figsize = (8,6))
 
-# plt.plot(Sdd, H, lw = 0.5, color = 'green')
-# plt.xticks(np.linspace(np.min(Sdd), np.max(Sdd), 6))
-# plt.yticks(np.linspace(0, np.max(H)+1000, 11))
-# plt.xlim([np.min(Sdd), np.max(Sdd)])
-# plt.ylim([0, np.max(H)+1000])
-# plt.xlabel('Static Energy [J/kg]', fontsize = 15)
-# plt.ylabel('Altitude [m]', fontsize = 15)
-# plt.title('Satic Energy of dry air profile', fontsize = 15)
+plt.plot(Sdd/Cp, H, lw = 0.5, color = 'green')
+plt.xticks(np.linspace(np.min(Sdd), np.max(Sdd), 6))
+plt.yticks(np.linspace(0, np.max(H)+1000, 11))
+plt.xlim([np.min(Sdd), np.max(Sdd)])
+plt.ylim([0, np.max(H)+1000])
+plt.xlabel('Static Energy [J/kg]', fontsize = 15)
+plt.ylabel('Altitude [m]', fontsize = 15)
+plt.title('Satic Energy of dry air profile', fontsize = 15)
 
-# plt.savefig('Sdd.png', dpi = 600)
-# plt.show()
+plt.savefig('Sdd.png', dpi = 600)
+plt.show()
 
-# plt.plot(Sd, H, lw = 0.5, color = 'blue')
-# plt.axhline(y = 15397, xmin = 0, xmax = 1, lw = 0.5)
-# plt.axhline(y = np.max(H), xmin = 0, xmax = 1, lw = 0.1)
-# plt.xticks(np.linspace(np.min(Sd), np.max(Sd), 5))
-# plt.yticks(np.linspace(0, np.max(H)+1000, 11))
-# plt.xlim([np.min(Sd), np.max(Sd)])
-# plt.ylim([0, np.max(H)+1000])
-# plt.xlabel('Static Energy [J/kg]', fontsize = 15)
-# plt.ylabel('Altitude', fontsize = 15)
-# plt.title('Static Energy Proifle - Altitude', fontsize = 15)
+plt.plot(Sd/Cp, H, lw = 0.5, color = 'blue')
+plt.axhline(y = 15397, xmin = 0, xmax = 1, lw = 0.5)
+plt.axhline(y = np.max(H), xmin = 0, xmax = 1, lw = 0.1)
+plt.xticks(np.linspace(np.min(Sd), np.max(Sd), 5))
+plt.yticks(np.linspace(0, np.max(H)+1000, 11))
+plt.xlim([np.min(Sd), np.max(Sd)])
+plt.ylim([0, np.max(H)+1000])
+plt.xlabel('Static Energy [J/kg]', fontsize = 15)
+plt.ylabel('Altitude', fontsize = 15)
+plt.title('Static Energy Proifle - Altitude', fontsize = 15)
 
-# plt.savefig('Sd.png', dpi = 300)
-# plt.show()
-# plt.plot(Sd, H, lw = 0.5)
+plt.savefig('Sd.png', dpi = 300)
+plt.show()
+plt.plot(Sd, H, lw = 0.5)
 
 # topic 3
 index = find_nearest(H, 500)
@@ -188,8 +187,8 @@ Sdt[0] = Sd[index]
 for i in range(len(Tt)-1):
     Tt[i+1] = Tt[i]-lapse_rate*(Ht[i+1]-Ht[i])
 
-for i in range(len(Tt)):
-    Ptt[i] = Ptt[0]
+
+Ptt[i] = Tt*(1000/P)**K
 
 for i in range(len(Tt)):
     Sdt[i] = Sdt[0]
@@ -247,21 +246,6 @@ plt.title('Static Energy of top hit tropopause', fontsize = 15)
 plt.legend(['Parcel', 'Surrounding'])
 
 plt.savefig('Sd_top.png', dpi = 300)
-plt.show()
-
-fig = plt.figure(figsize = (8,6))
-plt.plot(Sdt, Ht, lw = 0.5)
-plt.axhline(y = 500, xmin = 0, xmax = 1, lw = 0.5, color = 'red')
-plt.axhline(y = 15397, xmin = 0, xmax = 1, lw = 0.5, color = 'red')
-plt.xlim([302765, 303330])
-plt.ylim([0,16000])
-plt.xticks(np.linspace(302765, 303330, 6))
-plt.yticks(np.linspace(0,16000, 6))
-plt.xlabel('Static Energy [J/kg]', fontsize = 15)
-plt.ylabel('Altitude [m]', fontsize = 15)
-plt.title('Static Energy of top hit tropopause', fontsize = 15)
-
-plt.savefig('Sd_top_p.png', dpi = 300)
 plt.show()
 
 ## case 2
@@ -344,21 +328,6 @@ plt.legend(['Parcel', 'Surrounding'])
 plt.savefig('Sd_mid.png', dpi = 300)
 plt.show()
 
-fig = plt.figure(figsize = (8,6))
-plt.plot(Sdm, Hm, lw = 0.5)
-plt.axhline(y = 500, xmin = 0, xmax = 1, lw = 0.5, color = 'red')
-plt.axhline(y = 15397, xmin = 0, xmax = 1, lw = 0.5, color = 'red')
-plt.xlim([302745, 303330])
-plt.ylim([0,16000])
-plt.xticks(np.linspace(302745, 303330, 6))
-plt.yticks(np.linspace(0,16000, 6))
-plt.xlabel('Static Energy [J/kg]', fontsize = 15)
-plt.ylabel('Altitude [m]', fontsize = 15)
-plt.title('Static Energy of mid hit tropopause', fontsize = 15)
-
-plt.savefig('Sd_mid_p.png', dpi = 300)
-plt.show()
-
 ## case 3
 Tb = np.empty(index_b-index+1)
 Ptb = np.empty(index_b-index+1)
@@ -439,19 +408,3 @@ plt.legend(['Parcel', 'Surrounding'])
 
 plt.savefig('Sd_bot.png', dpi = 300)
 plt.show()
-
-fig = plt.figure(figsize = (8,6))
-plt.plot(Sdb, Hb, lw = 0.5)
-plt.axhline(y = 500, xmin = 0, xmax = 1, lw = 0.5, color = 'red')
-plt.axhline(y = 15397, xmin = 0, xmax = 1, lw = 0.5, color = 'red')
-plt.xlim([302725, 303330])
-plt.ylim([0,16000])
-plt.xticks(np.linspace(302725, 303330, 6))
-plt.yticks(np.linspace(0,16000, 6))
-plt.xlabel('Static Energy [J/kg]', fontsize = 15)
-plt.ylabel('Altitude [m]', fontsize = 15)
-plt.title('Static Energy of bottom hit tropopause', fontsize = 15)
-
-plt.savefig('Sd_bot_p.png', dpi = 300)
-plt.show()
-
