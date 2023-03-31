@@ -12,7 +12,7 @@ loop_time = 1000000
 
 
 # running for lorenz model
-for i in range(0,100):
+for i in range(1):
     loop_time = 1000000+100000*i
 
     dt = 0.001

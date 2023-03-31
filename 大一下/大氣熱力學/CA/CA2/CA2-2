@@ -1,0 +1,52 @@
+# import library
+import math as m
+import numpy as np
+from matplotlib import pyplot as plt
+
+
+# set constant
+A = 2.53*pow(10,9)
+B = 5.42*pow(10,3)
+epsilon = 0.622
+
+# read data 
+H, P, T, U = np.loadtxt(r"C:\Users\joe51\OneDrive\桌面\profile_ntu\大一下\大氣熱力學\CA2\46810-2018072100.edt.txt", dtype = 'float', delimiter = ',', usecols=(1,2,3,4), skiprows = 3, unpack = True)
+
+# calculate for specific humidity
+es = A*np.exp(-B/(T+273.15))
+e = es*U/100
+qv = (epsilon*e)/(P-(1-epsilon)*e)
+
+# Calculate for virtual temperature
+Tv = (1+(1/epsilon-1)*qv)*(T+273.15)
+
+# Calculate for the difference
+dif = Tv-(T+273.15)
+
+
+
+# plot the difference
+fig, ax = plt.subplots(1,2, sharey = 'row')
+for i in range(len(dif)):
+	if (abs(dif[i])<0.1):
+		ax[0].axhline(y = H[i], xmin = 0, xmax = 1, color = 'pink', linewidth = 0.5)
+ax[0].axvline(x = 0.1, ymin = 0, ymax = 1, color = 'green', linewidth = 0.5)
+ax[0].plot(dif, H, linewidth = 0.5)
+ax[0].set_xlim([np.min(dif), np.max(dif)])
+ax[0].set_ylim([0,np.max(H)])
+ax[0].set_xticks(np.linspace(np.min(dif), np.max(dif), 11))
+ax[0].set_yticks(np.linspace(0,np.max(H), 11))
+ax[0].set_title('Difference between Temperature & Virtual Temperature as Altitude Increasing', fontsize = 15)
+ax[0].set_xlabel('Difference between Temperature & Virtual Temperature [K]', fontsize = 15)
+ax[0].set_ylabel('Altitude [m]', fontsize = 15)
+
+ax[1].plot(1000*qv, H, linewidth = 0.5)
+ax[1].set_xlim([np.min(1000*qv), np.max(1000*qv)])
+ax[1].set_ylim([0,np.max(H)])
+ax[1].set_xticks(np.linspace(np.min(1000*qv), np.max(1000*qv), 11))
+ax[1].set_yticks(np.linspace(0,np.max(H), 11))
+ax[1].set_title('Specific Humidity as Altitude Increasing', fontsize = 15)
+ax[1].set_xlabel('Specific Humidity [g/kg]', fontsize = 15)
+
+plt.savefig('dif.png', dpi = 600)
+plt.show()

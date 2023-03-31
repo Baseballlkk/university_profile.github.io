@@ -1,0 +1,65 @@
+# import library
+import math as m
+import numpy as np
+from matplotlib import pyplot as plt
+
+# set constant
+A = 2.53*pow(10,9)
+B = 5.42*pow(10,3)
+epsilon = 0.622
+
+# read data 
+H, P, T, U = np.loadtxt(r"C:\Users\joe51\OneDrive\桌面\profile_ntu\大一下\大氣熱力學\CA2\46810-2018072100.edt.txt", dtype = 'float', delimiter = ',', usecols=(1,2,3,4), skiprows = 3, unpack = True)
+
+TK = T+273.15
+
+# array for dry air
+Td = np.zeros(len(T))
+
+
+# calculate for specific humidity
+es = A*np.exp(-B/(T+273.15))
+e = es*U/100
+qv = (epsilon*e)/(P-(1-epsilon)*e)
+
+# Calculate for virtual temperature
+Tv = (1+(1/epsilon-1)*qv)*(T+273.15)
+
+# density of the initial dry air
+rho = P[0]/(287*Tv[0])
+
+Td[0] = Tv[0]+10
+
+# Temperature of dry air
+for i in range(len(Td)-1):
+	Td[i+1] = Td[i]-9.8*(H[i+1]-H[i])/1000
+
+# Calculate for buoyancy
+f = (Td-Tv)/Tv*9.8
+
+for i in range(len(f)):
+	if (H[i]==997):
+		f1 = f[i]
+	elif (H[i]==1002):
+		f2 = f[i]
+	elif (H[i]==15512):
+		print(f[i])	
+
+f1000 = f1+(f2-f1)/(1002-997)*3
+print(f1000)
+
+# plot the graph
+plt.plot(f, H, linewidth = 0.5)
+plt.axhline(y = 1000, xmin = 0, xmax = 1, color = 'red', linewidth = 0.5)
+plt.axhline(y = 15112, xmin = 0, xmax = 1, color = 'red', linewidth = 0.5)
+plt.xlim([np.min(f), np.max(f)])
+plt.ylim([0, np.max(H)+100])
+plt.xticks(np.linspace(np.min(f), np.max(f), 6))
+plt.yticks(np.linspace(0, np.max(H)+100, 21))
+plt.xlabel('Buoyancy Acceleration [m/$s^2$]', fontsize = 15)
+plt.ylabel('Altitude [m]', fontsize = 15)
+plt.title('Buoyancy Profile (+10K) as Altitude Increasing', fontsize = 15)
+
+plt.savefig('fb+10-H.png', dpi = 600)
+
+plt.show()

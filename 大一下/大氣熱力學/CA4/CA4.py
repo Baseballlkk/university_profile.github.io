@@ -188,7 +188,7 @@ for i in range(len(Tt)-1):
     Tt[i+1] = Tt[i]-lapse_rate*(Ht[i+1]-Ht[i])
 
 
-Ptt[i] = Tt*(1000/P)**K
+Ptt[i] = Tt*(1000/Pt)**K
 
 for i in range(len(Tt)):
     Sdt[i] = Sdt[0]

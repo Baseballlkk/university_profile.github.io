@@ -1,0 +1,48 @@
+# import library
+import math as m
+import numpy as np
+from matplotlib import pyplot as plt
+
+# set constant
+A = 2.53*pow(10,9)
+B = 5.42*pow(10,3)
+epsilon = 0.622
+
+# read data 
+H, P, T, U = np.loadtxt(r"C:\Users\joe51\OneDrive\桌面\profile_ntu\大一下\大氣熱力學\CA2\46810-2018072100.edt.txt", dtype = 'float', delimiter = ',', usecols=(1,2,3,4), skiprows = 3, unpack = True)
+
+TK = T+273.15
+
+# array for dry air
+Td = np.zeros(len(T))
+
+# calculate for specific humidity
+es = A*np.exp(-B/(T+273.15))
+e = es*U/100
+qv = (epsilon*e)/(P-(1-epsilon)*e)
+
+# Calculate for virtual temperature
+Tv = (1+(1/epsilon-1)*qv)*(T+273.15)
+
+Td[0] = Tv[0]+10
+
+# Temperature of dry air
+for i in range(len(Td)-1):
+	Td[i+1] = Td[i]-9.8*(H[i+1]-H[i])/1000
+
+# Calculate for buoyancy
+f = (Td-Tv)/Tv*9.8
+
+# plt dif 
+plt.plot(Td, H, linewidth = 0.5)
+plt.plot(Tv, H, linewidth = 0.5)
+plt.xlim([np.min(Td), np.max(Td)])
+plt.ylim([0, np.max(H)+100])
+plt.xticks(np.linspace(np.min(Td), np.max(Td), 6))
+plt.yticks(np.linspace(0, np.max(H)+100, 21))
+plt.xlabel('Virtual Temperature of Dry Air Parcel & Surrounding', fontsize = 15)
+plt.ylabel('Altitude [m]', fontsize = 15)
+plt.title('Virtual Temperature of Dry Air Parcel(+10 K) & Surrounding as Altitude Increasing', fontsize = 15)
+plt.legend(['Dry Air', 'Sur'])
+
+plt.show()

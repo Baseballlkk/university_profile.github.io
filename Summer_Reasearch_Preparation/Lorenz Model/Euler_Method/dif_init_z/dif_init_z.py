@@ -8,7 +8,7 @@ import lm
 # running times
 loop_time = 1000000
 
-dt = 0.001
+dt = 0.01
 
 x = np.empty(loop_time+1)
 y = np.empty(loop_time+1)
