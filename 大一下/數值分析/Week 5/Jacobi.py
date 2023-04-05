@@ -27,4 +27,5 @@ def jacobi(A, b, x0, tol=1e-8, max_iter=1000):
         error = np.linalg.norm(x - x_new, np.inf)
         x = np.copy(x_new)
         iter += 1
+        print(x)
     return x

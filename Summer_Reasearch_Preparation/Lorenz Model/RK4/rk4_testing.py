@@ -104,49 +104,49 @@ z[0] = 0.001
 
 # plt.savefig('Test_of_rk4.png', dpi = 600)
 # plt.show()
+for j in range(loop_time):
+    for i in range(10000):
 
-for i in range(10000):
+        # calculate between time
+        B00 = x[j]+r.uniform(0, 1e-10)
+        B01 = x[j]+r.uniform(0, 1e-10)
+        B02 = x[j]+r.uniform(0, 1e-10)
 
-    # calculate between time
-    B00 = x[0]+r.uniform(0, 1e-10)
-    B01 = x[0]+r.uniform(0, 1e-10)
-    B02 = x[0]+r.uniform(0, 1e-10)
+        B10 = y[j]+r.uniform(0, 1e-10)
+        B11 = y[j]+r.uniform(0, 1e-10)
+        B12 = y[j]+r.uniform(0, 1e-10)
 
-    B10 = y[0]+r.uniform(0, 1e-10)
-    B11 = y[0]+r.uniform(0, 1e-10)
-    B12 = y[0]+r.uniform(0, 1e-10)
+        B20 = z[j]+r.uniform(0, 1e-10)
+        B21 = z[j]+r.uniform(0, 1e-10)
+        B22 = z[j]+r.uniform(0, 1e-10)
 
-    B20 = z[0]+r.uniform(0, 1e-10)
-    B21 = z[0]+r.uniform(0, 1e-10)
-    B22 = z[0]+r.uniform(0, 1e-10)
+        B = np.array([[B00, B01, B02], [B10, B11, B12], [B20, B21, B22]])
+        AB = np.array([[rk.x_evo(B00, B10, B20, h), rk.x_evo(B01, B11, B21, h), rk.x_evo(B02, B12, B22, h)], [rk.y_evo(B00, B10, B20, h), rk.y_evo(B01, B11, B21, h), rk.y_evo(B02, B12, B22, h)], [rk.z_evo(B00, B10, B20, h), rk.z_evo(B01, B11, B21, h), rk.z_evo(B02, B12, B22, h)]])
+        if (np.linalg.det(B) == 0)&(np.linalg.det(AB) == 0):
+            break
 
-    B = np.array([[B00, B01, B02], [B10, B11, B12], [B20, B21, B22]])
-    AB = np.array([[rk.x_evo(B00, B10, B20, h), rk.x_evo(B01, B11, B21, h), rk.x_evo(B02, B12, B22, h)], [rk.y_evo(B00, B10, B20, h), rk.y_evo(B01, B11, B21, h), rk.y_evo(B02, B12, B22, h)], [rk.z_evo(B00, B10, B20, h), rk.z_evo(B01, B11, B21, h), rk.z_evo(B02, B12, B22, h)]])
-    if (np.linalg.det(B) == 0)&(np.linalg.det(AB) == 0):
-        break
+        # print linear operator
+        A = np.dot(AB, np.linalg.inv(B))
 
-    # print linear operator
-    A = np.dot(AB, np.linalg.inv(B))
-
-    # to other file
-    with open('Linear_operator[0,0].txt', 'a') as file:
-        file.write(str(A[0,0])+'\n')
-    with open('Linear_operator[0,1].txt', 'a') as file:
-        file.write(str(A[0,1])+'\n')
-    with open('Linear_operator[0,2].txt', 'a') as file:
-        file.write(str(A[0,2])+'\n')
-    with open('Linear_operator[1,0].txt', 'a') as file:
-        file.write(str(A[1,0])+'\n')
-    with open('Linear_operator[1,1].txt', 'a') as file:
-        file.write(str(A[1,1])+'\n')
-    with open('Linear_operator[1,2].txt', 'a') as file:
-        file.write(str(A[1,2])+'\n')
-    with open('Linear_operator[2,0].txt', 'a') as file:
-        file.write(str(A[2,0])+'\n')
-    with open('Linear_operator[2,1].txt', 'a') as file:
-        file.write(str(A[2,1])+'\n')
-    with open('Linear_operator[2,2].txt', 'a') as file:
-        file.write(str(A[2,2])+'\n')
+        # to other file
+        with open('Linear_operator_step'+str(j)+',[0,0].txt', 'a') as file:
+            file.write(str(A[0,0])+'\n')
+        with open('Linear_operator_step'+str(j)+',[0,1].txt', 'a') as file:
+            file.write(str(A[0,1])+'\n')
+        with open('Linear_operator_step'+str(j)+',[0,2].txt', 'a') as file:
+            file.write(str(A[0,2])+'\n')
+        with open('Linear_operator_step'+str(j)+',[1,0].txt', 'a') as file:
+            file.write(str(A[1,0])+'\n')
+        with open('Linear_operator_step'+str(j)+',[1,1].txt', 'a') as file:
+            file.write(str(A[1,1])+'\n')
+        with open('Linear_operator_step'+str(j)+',[1,2].txt', 'a') as file:
+            file.write(str(A[1,2])+'\n')
+        with open('Linear_operator_step'+str(j)+',[2,0].txt', 'a') as file:
+            file.write(str(A[2,0])+'\n')
+        with open('Linear_operator_step'+str(j)+',[2,1].txt', 'a') as file:
+            file.write(str(A[2,1])+'\n')
+        with open('Linear_operator_step'+str(j)+',[2,2].txt', 'a') as file:
+            file.write(str(A[2,2])+'\n')
     # print(A)
     # with open('matrix.txt', 'a') as file:
     #     file.write('linear operator \n')
@@ -156,15 +156,3 @@ for i in range(10000):
     #         file.write('\n')
     #     file.write('\n')
     #     file.write('###################################################################\n')
-
-# draw boxplot
-A00 = np.loadtxt('Linear_operator[0,0].txt')
-A01 = np.loadtxt('Linear_operator[0,1].txt')
-A02 = np.loadtxt('Linear_operator[0,2].txt')
-A10 = np.loadtxt('Linear_operator[1,0].txt')
-A11 = np.loadtxt('Linear_operator[1,1].txt')
-A12 = np.loadtxt('Linear_operator[1,2].txt')
-A20 = np.loadtxt('Linear_operator[2,0].txt')
-A21 = np.loadtxt('Linear_operator[2,1].txt')
-A22 = np.loadtxt('Linear_operator[2,2].txt')
-
