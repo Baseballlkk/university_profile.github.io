@@ -10,7 +10,7 @@ import random as r
 loop_time = int(input('Input loop time: '))
 h = float(input('Input time interval: '))
 
-#################################################################################################################
+#############################################################################
 # write class of rk4
 class k1:
     def k1x(self, x, y, z, h):
@@ -66,17 +66,20 @@ class k4(k3):
     
 class rk4(k4):
     def x_evo(self, x, y, z, h):
-        self.x_1 = x+(h/6)*(self.k1x(x, y, z, h)+2*self.k2x(x, y, z, h)+2*self.k3x(x, y, z, h)+self.k4x(x, y, z, h))
+        self.x_1 = x+(h/6)*(self.k1x(x, y, z, h)+2*self.k2x(x, y, z, h)+\
+                            2*self.k3x(x, y, z, h)+self.k4x(x, y, z, h))
         return self.x_1
 
     def y_evo(self, x, y, z, h):
-        self.y_1 = y+(h/6)*(self.k1y(x, y, z, h)+2*self.k2y(x, y, z, h)+2*self.k3y(x, y, z, h)+self.k4y(x, y, z, h))
+        self.y_1 = y+(h/6)*(self.k1y(x, y, z, h)+2*self.k2y(x, y, z, h)+\
+                            2*self.k3y(x, y, z, h)+self.k4y(x, y, z, h))
         return self.y_1
     
     def z_evo(self, x, y, z, h):
-        self.z_1 = z+(h/6)*(self.k1z(x, y, z, h)+2*self.k2z(x, y, z, h)+2*self.k3z(x, y, z, h)+self.k4z(x, y, z, h))
+        self.z_1 = z+(h/6)*(self.k1z(x, y, z, h)+2*self.k2z(x, y, z, h)+\
+                            2*self.k3z(x, y, z, h)+self.k4z(x, y, z, h))
         return self.z_1
-###################################################################################################################
+##################################################################################
 # assign to object
 x = np.empty(loop_time)
 y = np.empty(loop_time)
@@ -104,7 +107,7 @@ z[0] = 0.001
 
 # plt.savefig('Test_of_rk4.png', dpi = 600)
 # plt.show()
-for j in range(loop_time):
+for j in range(1):
     for i in range(10000):
 
         # calculate between time
@@ -121,38 +124,14 @@ for j in range(loop_time):
         B22 = z[j]+r.uniform(0, 1e-10)
 
         B = np.array([[B00, B01, B02], [B10, B11, B12], [B20, B21, B22]])
-        AB = np.array([[rk.x_evo(B00, B10, B20, h), rk.x_evo(B01, B11, B21, h), rk.x_evo(B02, B12, B22, h)], [rk.y_evo(B00, B10, B20, h), rk.y_evo(B01, B11, B21, h), rk.y_evo(B02, B12, B22, h)], [rk.z_evo(B00, B10, B20, h), rk.z_evo(B01, B11, B21, h), rk.z_evo(B02, B12, B22, h)]])
+        AB = np.array([[rk.x_evo(B00, B10, B20, h), rk.x_evo(B01, B11, B21, h), rk.x_evo(B02, B12, B22, h)],\
+                        [rk.y_evo(B00, B10, B20, h), rk.y_evo(B01, B11, B21, h), rk.y_evo(B02, B12, B22, h)],\
+                        [rk.z_evo(B00, B10, B20, h), rk.z_evo(B01, B11, B21, h), rk.z_evo(B02, B12, B22, h)]])
         if (np.linalg.det(B) == 0)&(np.linalg.det(AB) == 0):
             break
 
         # print linear operator
         A = np.dot(AB, np.linalg.inv(B))
-
-        # to other file
-        with open('Linear_operator_step'+str(j)+',[0,0].txt', 'a') as file:
-            file.write(str(A[0,0])+'\n')
-        with open('Linear_operator_step'+str(j)+',[0,1].txt', 'a') as file:
-            file.write(str(A[0,1])+'\n')
-        with open('Linear_operator_step'+str(j)+',[0,2].txt', 'a') as file:
-            file.write(str(A[0,2])+'\n')
-        with open('Linear_operator_step'+str(j)+',[1,0].txt', 'a') as file:
-            file.write(str(A[1,0])+'\n')
-        with open('Linear_operator_step'+str(j)+',[1,1].txt', 'a') as file:
-            file.write(str(A[1,1])+'\n')
-        with open('Linear_operator_step'+str(j)+',[1,2].txt', 'a') as file:
-            file.write(str(A[1,2])+'\n')
-        with open('Linear_operator_step'+str(j)+',[2,0].txt', 'a') as file:
-            file.write(str(A[2,0])+'\n')
-        with open('Linear_operator_step'+str(j)+',[2,1].txt', 'a') as file:
-            file.write(str(A[2,1])+'\n')
-        with open('Linear_operator_step'+str(j)+',[2,2].txt', 'a') as file:
-            file.write(str(A[2,2])+'\n')
-    # print(A)
-    # with open('matrix.txt', 'a') as file:
-    #     file.write('linear operator \n')
-    #     for row in A:
-    #         for element in row:
-    #             file.write(str(element) + ' ')
-    #         file.write('\n')
-    #     file.write('\n')
-    #     file.write('###################################################################\n')
+        
+        with open('Linear_operator.txt', 'a') as file:
+            file.write(str(A)+'\n')
