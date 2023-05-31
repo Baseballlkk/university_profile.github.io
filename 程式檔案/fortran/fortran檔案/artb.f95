@@ -1,9 +1,0 @@
-PROGRAM artb
-IMPLICIT NONE
-REAL :: a = 8.0, B=3.2
-REAL :: xROOTy
-
-WRITE(*,*) xROOTy(a,b)
-
-
-END PROGRAM artb

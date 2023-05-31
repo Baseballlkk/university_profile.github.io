@@ -1,8 +1,0 @@
-#formatcode
-%(-+0)<width>.[precision]<types>
-
-# save file
-np.savetxt('file name ',<var>,fmt = 'fmt',delimiter = 'delimiter',header = 'header',footer = 'footer',comments = 'coomments')
-
-# load text
-np.loadtxt('file name',dtype = 'type',delimiter = 'delimiter', comments = 'comments')

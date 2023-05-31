@@ -1,4 +1,0 @@
-set gxout fwrite
-set fwrite <filename>
-d <var>
-disabel fwrite

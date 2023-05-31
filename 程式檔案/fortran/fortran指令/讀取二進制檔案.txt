@@ -1,1 +1,0 @@
-open 時，format 填入unformatted
